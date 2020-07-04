@@ -1,0 +1,23 @@
+{
+  "extends": ["airbnb-typescript/base", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.json", "./app/**/tsconfig.json"],
+    "tsconfigRootDir": "./"
+  },
+  "plugins": ["jest","@typescript-eslint"],
+  "env": { "jest": true },
+  "rules": {
+    "max-len": ["warn", 150],
+    "consistent-return": 0,
+    "import/no-extraneous-dependencies": ["error", { "packageDir": "./" }],
+    "no-underscore-dangle": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".d.ts", ".tsx", ".json", ".js"]
+      }
+    }
+  }
+}
