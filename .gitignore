@@ -47,6 +47,9 @@ typings/
 # TypeScript cache
 *.tsbuildinfo
 
+# Typescript outputs
+built/
+
 # Optional npm cache directory
 .npm
 
@@ -102,3 +105,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# VSCode
+.vscode
+
+# direnv
+.envrc
