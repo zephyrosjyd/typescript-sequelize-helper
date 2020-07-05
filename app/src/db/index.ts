@@ -17,9 +17,9 @@ type DatabaseModelMap = Record<string, InstanceType<typeof DatabaseModel>>;
 export default class Database {
   private static _instance?: InstanceType<typeof Database>;
 
-  models: DatabaseModelMap = {};
-
   private initialized = false;
+
+  models: DatabaseModelMap = {};
 
   constructor(public ormInstance?: ORM) {
     if (this.ormInstance) this.bindModels();
