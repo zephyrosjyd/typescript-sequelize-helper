@@ -25,7 +25,10 @@ type MultiResultSet<T extends ModelTypeUnion> = Model<T>[] | ModelConstraints<T>
 export default class DatabaseModel<T extends TModel<Model>> {
   constructor(public name: string, public modelInstance: T) {}
 
-  private static toJSON<M extends ModelTypeUnion>(resultSet: ResultSet<M> | MultiResultSet<M>, returnAsModel?: boolean): ResultSet<M> | MultiResultSet<M> {
+  private static toJSON<M extends ModelTypeUnion>(
+    resultSet: ResultSet<M> | MultiResultSet<M>,
+    returnAsModel?: boolean,
+  ): ResultSet<M> | MultiResultSet<M> {
     if (returnAsModel) return resultSet;
 
     if (Array.isArray(resultSet)) return (resultSet as Model[]).map((it) => it.toJSON() as ModelConstraints<M>);
@@ -33,32 +36,52 @@ export default class DatabaseModel<T extends TModel<Model>> {
     return (resultSet as Model)?.toJSON() as ModelConstraints<M>;
   }
 
-  insert = async <M extends ModelTypeUnion>(items: ModelConstraints<M>, options?: CreateOptions, returnAsModel?: boolean): Promise<ResultSet<M>> => {
+  insert = async <M extends ModelTypeUnion>(
+    items: ModelConstraints<M>,
+    options?: CreateOptions,
+    returnAsModel?: boolean,
+  ): Promise<ResultSet<M>> => {
     const result = await this.modelInstance.create(items, options);
     return DatabaseModel.toJSON(result, returnAsModel) as ResultSet<M>;
   };
 
-  selectByPk = async <M extends ModelTypeUnion>(identifier: string | number, options?: FindOptions, returnAsModel?: boolean): Promise<ResultSet<M>> => {
+  selectByPk = async <M extends ModelTypeUnion>(
+    identifier: string | number,
+    options?: FindOptions,
+    returnAsModel?: boolean,
+  ): Promise<ResultSet<M>> => {
     const result = await this.modelInstance.findByPk(identifier, options);
     return DatabaseModel.toJSON(result, returnAsModel) as ResultSet<M>;
   };
 
-  selectOne = async <M extends ModelTypeUnion>(options?: FindOptions, returnAsModel?: boolean): Promise<ResultSet<M>> => {
+  selectOne = async <M extends ModelTypeUnion>(
+    options?: FindOptions,
+    returnAsModel?: boolean,
+  ): Promise<ResultSet<M>> => {
     const result = await this.modelInstance.findOne(options);
     return DatabaseModel.toJSON(result, returnAsModel) as ResultSet<M>;
   };
 
-  selectOrInsertIfNotExist = async <M extends ModelTypeUnion>(options: FindOrCreateOptions, returnAsModel?: boolean): Promise<[ResultSet<M>, boolean]> => {
+  selectOrInsertIfNotExist = async <M extends ModelTypeUnion>(
+    options: FindOrCreateOptions,
+    returnAsModel?: boolean,
+  ): Promise<[ResultSet<M>, boolean]> => {
     const [result, created] = await this.modelInstance.findOrCreate(options);
     return [DatabaseModel.toJSON(result, returnAsModel) as ResultSet<M>, created];
   };
 
-  selectAll = async <M extends ModelTypeUnion>(options?: FindOptions, returnAsModel?: boolean): Promise<MultiResultSet<M>> => {
+  selectAll = async <M extends ModelTypeUnion>(
+    options?: FindOptions,
+    returnAsModel?: boolean,
+  ): Promise<MultiResultSet<M>> => {
     const results = await this.modelInstance.findAll(options);
     return DatabaseModel.toJSON(results, returnAsModel) as MultiResultSet<M>;
   };
 
-  selectAndCountAll = async <M extends ModelTypeUnion>(options?: FindOptions, returnAsModel?: boolean): Promise<{
+  selectAndCountAll = async <M extends ModelTypeUnion>(
+    options?: FindOptions,
+    returnAsModel?: boolean,
+  ): Promise<{
     rows: MultiResultSet<M>,
     count: number,
   }> => {
@@ -69,7 +92,11 @@ export default class DatabaseModel<T extends TModel<Model>> {
     };
   };
 
-  update = async <M extends ModelTypeUnion>(values: ModelConstraints<M>, options: UpdateOptions, returnAsModel?: boolean): Promise<{
+  update = async <M extends ModelTypeUnion>(
+    values: ModelConstraints<M>,
+    options: UpdateOptions,
+    returnAsModel?: boolean,
+  ): Promise<{
     rows: MultiResultSet<M>,
     count: number,
   }> => {
