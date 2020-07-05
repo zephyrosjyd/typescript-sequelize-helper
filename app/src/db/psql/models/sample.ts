@@ -1,7 +1,5 @@
-import {
-  Sequelize, Model, DataTypes, ModelAttributes,
-} from 'sequelize';
-import type { TModel } from './types';
+import type { Sequelize, Model, TModel } from './types';
+import schema from '../../../schemas/sample';
 
 export interface ISample {
   id?: string;
@@ -12,23 +10,13 @@ export interface ISample {
   updatedAt?: string;
 }
 
-// export interface ISampleModel extends Model, ISample { }
 export type ISampleModel = Model & ISample;
 
 export type TSampleModel = TModel<ISampleModel>;
 
 export default (sequelize: Sequelize): TSampleModel => {
-  const attributes: ModelAttributes = {
-    id: {
-      primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-    },
-    name: { type: DataTypes.STRING, allowNull: false },
-    price: { type: new DataTypes.DECIMAL(10, 2), allowNull: false },
-    archived: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
-  };
-  return sequelize.define('Sample', attributes, {
+  const { name, attributes } = schema;
+  return sequelize.define(name, attributes, {
     timestamps: true,
   }) as TSampleModel;
 };

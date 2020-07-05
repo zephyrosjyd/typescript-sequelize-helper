@@ -1,5 +1,5 @@
-import type { Sequelize, SyncOptions, Model } from 'sequelize';
 import type {
+  Sequelize, SyncOptions, Model,
   TModel, TSampleModel, TSampleDetailModel,
   ISample, ISampleDetail,
 } from './types';
@@ -12,7 +12,7 @@ export type ModelTypeUnion = ISample | ISampleDetail;
 // Model 객체를 생성할 수 있는 factory 함수 등록
 export const getModelFactoryList = async (): Promise<Factory<TModel<Model>>[]> => ([
   (await import('./sample')).default as Factory<TSampleModel>,
-  (await import('./sample_detail')).default as Factory<TSampleDetailModel>,
+  (await import('./sampleDetail')).default as Factory<TSampleDetailModel>,
 ]);
 
 export const sync = async (
@@ -21,10 +21,9 @@ export const sync = async (
 ): Promise<Sequelize> => sequelize.sync(options);
 
 type Filter<T, U> = T extends U ? T : never;
-export type ModelConstraints<T extends ModelTypeUnion> = Filter<ModelTypeUnion, T>;// Partial<Required<T>>;
+export type ModelConstraints<T extends ModelTypeUnion> = Filter<ModelTypeUnion, T>;
 
 export type {
-  // DataRow,
   TModel,
   ISample,
   ISampleModel,
