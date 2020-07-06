@@ -1,4 +1,5 @@
 import { Sequelize, Op } from 'sequelize';
+import { random } from 'lodash';
 import Database from '../../src/db';
 import type {
   ISampleDetail, ISample,
@@ -8,11 +9,11 @@ import type {
 
 describe('[lib/db] ORM Wrapper', () => {
   let db: Database;
-  const getRandom = (min: number, max: number): number => {
-    const min0 = Math.ceil(min);
-    const max0 = Math.floor(max);
-    return Math.floor(Math.random() * (max0 - min0)) + min0;
-  };
+  // const getRandom = (min: number, max: number): number => {
+  //   const min0 = Math.ceil(min);
+  //   const max0 = Math.floor(max);
+  //   return Math.floor(Math.random() * (max0 - min0)) + min0;
+  // };
   const uuidLength = '36453319-64c8-488e-be7b-efb4c45e39ba'.length;
 
   type SampleModel = DatabaseModel<TModel<ISampleModel>>;
@@ -49,8 +50,8 @@ describe('[lib/db] ORM Wrapper', () => {
   describe('[Sample & SampleDetail] CRUD', () => {
     it('[Sample] insert', async () => {
       const data = {
-        name: `unit-test1-${getRandom(1, 1000)}`,
-        price: getRandom(1000, 100000),
+        name: `unit-test1-${random(1, 1000)}`,
+        price: random(1000, 100000),
         archived: false,
       } as ISample;
       const Sample = db.models.Sample as SampleModel;
@@ -63,8 +64,8 @@ describe('[lib/db] ORM Wrapper', () => {
 
     it('[Sample] select by PK', async () => {
       const data = {
-        name: `unit-test2-${getRandom(1, 1000)}`,
-        price: getRandom(1000, 100000),
+        name: `unit-test2-${random(1, 1000)}`,
+        price: random(1000, 100000),
         archived: false,
         // none: 1111,
       };
@@ -79,14 +80,14 @@ describe('[lib/db] ORM Wrapper', () => {
 
     it('[Sample] update', async () => {
       const data = {
-        name: `unit-test3-${getRandom(1, 1000)}`,
-        price: getRandom(1000, 100000),
+        name: `unit-test3-${random(1, 1000)}`,
+        price: random(1000, 100000),
         archived: false,
       } as ISample;
       const Sample = db.models.Sample as SampleModel;
       const savedRs = await Sample.insert(data) as ISample;
       const newData = {
-        price: getRandom(1000, 100000),
+        price: random(1000, 100000),
         archived: true,
       } as ISample;
       const { rows, count } = await Sample.update(newData, {
@@ -105,8 +106,8 @@ describe('[lib/db] ORM Wrapper', () => {
 
     it('[Sample] delete', async () => {
       const data = {
-        name: `unit-test4-${getRandom(1, 1000)}`,
-        price: getRandom(1000, 100000),
+        name: `unit-test4-${random(1, 1000)}`,
+        price: random(1000, 100000),
         archived: false,
       } as ISample;
       const Sample = db.models.Sample as SampleModel;
@@ -126,8 +127,8 @@ describe('[lib/db] ORM Wrapper', () => {
 
     it('[SampleDetail+Sample] insert & select with join', async () => {
       const data = {
-        name: `unit-test5-${getRandom(1, 1000)}`,
-        price: getRandom(1000, 100000),
+        name: `unit-test5-${random(1, 1000)}`,
+        price: random(1000, 100000),
         archived: false,
       } as ISample;
       const Sample = db.models.Sample as SampleModel;
