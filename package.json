@@ -18,7 +18,9 @@
   "author": "Luke Youngdong Ji <zephyrosjyd@gmail.com>",
   "jest": {
     "preset": "ts-jest",
-    "rootDir": "."
+    "rootDir": "./app",
+    "setupFiles": ["<rootDir>/test/env"],
+    "moduleFileExtensions": ["js", "json", "ts", "d.ts"]
   },
   "dependencies": {
     "dotenv": "^8.2.0",
