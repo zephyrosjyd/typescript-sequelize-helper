@@ -9,20 +9,18 @@ import type {
 
 describe('[lib/db] ORM Wrapper', () => {
   let db: Database;
-  // const getRandom = (min: number, max: number): number => {
-  //   const min0 = Math.ceil(min);
-  //   const max0 = Math.floor(max);
-  //   return Math.floor(Math.random() * (max0 - min0)) + min0;
-  // };
   const uuidLength = '36453319-64c8-488e-be7b-efb4c45e39ba'.length;
 
   type SampleModel = DatabaseModel<TModel<ISampleModel>>;
   type SampleDetailModel = DatabaseModel<TModel<ISampleDetailModel>>;
 
   beforeAll(async () => {
-    db = Database.instance;
-    await db.initialize();
-
+    try {
+      db = Database.instance;
+      await db.initialize();
+    } catch (err) {
+      console.log(err);
+    }
     // await Database.sync();
   });
 
@@ -136,7 +134,7 @@ describe('[lib/db] ORM Wrapper', () => {
       const sequelize = db.ormInstance?.sequelize as Sequelize;
 
       const rs = [] as (ISample | ISampleDetail)[];
-      await sequelize.transaction(async (transaction) => {
+      await sequelize?.transaction(async (transaction) => {
         rs[0] = await Sample.insert(data, { transaction }) as ISample;
         rs[1] = await SampleDetail.insert<ISampleDetail>({
           sid: rs[0].id as string,
