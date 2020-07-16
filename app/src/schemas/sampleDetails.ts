@@ -1,15 +1,16 @@
-import { Sequelize, ISchema } from './types';
+import { DataTypes } from 'sequelize';
+import { ISchema } from './types';
 
 export default {
   name: 'SampleDetail',
   attributes: {
     id: {
       primaryKey: true,
-      type: Sequelize.DataTypes.UUID,
-      defaultValue: Sequelize.DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     sid: {
-      type: Sequelize.DataTypes.UUID,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'Samples',

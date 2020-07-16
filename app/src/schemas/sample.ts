@@ -1,23 +1,24 @@
-import { Sequelize, ISchema } from './types';
+import { DataTypes } from 'sequelize';
+import { ISchema } from './types';
 
 export default {
   name: 'Sample',
   attributes: {
     id: {
       primaryKey: true,
-      type: Sequelize.DataTypes.UUID,
-      defaultValue: Sequelize.DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     name: {
-      type: Sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     price: {
-      type: new Sequelize.DataTypes.DECIMAL(10, 2),
+      type: new DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
     archived: {
-      type: Sequelize.DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
